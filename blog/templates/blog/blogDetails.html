@@ -42,7 +42,9 @@
                     </article>
                     <div class="contact-form article-comment">
                         <h4>Comments</h4>
+                        {% include 'blog/blogComments.html' %}
                         <form id="contact-form" method="POST">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">

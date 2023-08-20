@@ -9,7 +9,7 @@ def home(request):
 
 def details(request, slug):
     post = Post.objects.get(slug=slug)
-    latest = Post.objects.exclude(slug__exact=post.slug)[:2]
+    latest = Post.objects.exclude(slug__exact=post.slug)[:5]
     categorys = Category.objects.all()
     context = {"post":post, 'categorys':categorys, 'latest':latest}
     return render(request, 'blog/blogDetails.html', context)
