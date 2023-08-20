@@ -1,0 +1,107 @@
+{%extends 'base.html'%}
+{% block title %}Your leading website for blog articles{% endblock title %}
+{%block content%}
+<div class="py-2" id="top-head">
+    <h2><span>HOT NEWS</span></h2>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+        {% for post in posts %}
+            {% if forloop.counter <= 2 %}
+            <div class="w-100">
+                <a href="{% url 'details' post.slug %}">
+                <div class="image-container">
+                    <img src="{{post.image.url}}" class="card-img-top w-100 shadow-1-strong rounded mb-2"
+                    style="height: 200px" alt="Boat on Calm Water" />
+                    <div class="overlay"></div>
+                </div>
+                </a>
+                <a href="{% url 'details' post.slug %}">
+                <div class="text-center">
+                    <h3>{{post.title}}</h3>
+                </div>
+                </a>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            {% for post in posts %}
+                {% if forloop.counter == 3 %}
+                <div class="w-100">
+                    <a href="{% url 'details' post.slug %}">
+                    <div class="image-container">
+                        <img src="{{post.image.url}}" class="w-100 shadow-1-strong rounded mb-4" style="height: 400px"
+                        alt="Mountains in the Clouds" />
+                        <div class="overlay"></div>
+                    </div>
+                    </a>
+                    <a href="{% url 'details' post.slug %}">
+                    <div class="text-center">
+                        <h3>
+                        {{post.title}}
+                        </h3>
+                    </div>
+                    </a>
+                </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+
+        <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+            {% for post in posts %}
+                {% if forloop.counter >= 4 and forloop.counter <= 5 %}
+                <div class="w-100">
+                    <a href="{% url 'details' post.slug %}">
+                    <div class="image-container">
+                        <img src="{{post.image.url}}" class="card-img-top w-100 shadow-1-strong rounded mb-2"
+                        style="height: 200px" alt="Boat on Calm Water" />
+                        <div class="overlay"></div>
+                    </div>
+                    </a>
+                    <a href="{% url 'details' post.slug %}">
+                    <div class="text-center">
+                        <h3>{{post.title}}</h3>
+                    </div>
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+</div>
+
+<section class="pt-4 px-4">
+      <div class="py-2" id="top-head">
+        <h2><span>LATEST POSTS</span></h2>
+      </div>
+      <!-- Cards starts  -->
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for post in posts %}
+            {% if forloop.counter > 5 %}
+            <div class="col">
+                <div class="h-100">
+                    <a href="{% url 'details' post.slug %}">
+                    <div class="image-container">
+                        <img src="{{post.image.url}}" class="card-img-top w-100 shadow-1-strong rounded mb-2" style="height: 200px"
+                        alt="Boat on Calm Water" />
+                        <div class="overlay"></div>
+                    </div>
+                    </a>
+
+                    <a href="{% url 'details' post.slug %}">
+                    <div class="card-body text-center">
+                    <h6 class="card-title">EUROPE</h6>
+                    <h3 class="card-text">
+                        {{post.title}}
+                    </h3>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+      </div>
+      <!-- Cards ends  -->
+</section>
+{% endblock %}

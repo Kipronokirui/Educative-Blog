@@ -1,0 +1,148 @@
+{%extends 'base.html'%}
+{% block title %}Your leading website for blog articles{% endblock title %}
+{%block content%}
+<section>
+<div class="blog-single gray-bg">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-lg-8 m-15px-tb">
+                    <article class="article">
+                        <div class="article-img">
+                            <img src="{{post.image.url}}" title="" alt="{{post.title}}">
+                        </div>
+                        <div class="article-title">
+                            <h6><a href="{% url 'categoryPosts' post.category.slug %}">{{post.category}}</a></h6>
+                            <h2>{{post.title}}</h2>
+                            <div class="media">
+                                <a href="#">
+                                <div class="avatar">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" title="" alt="">
+                                </div>
+                                </a>
+                                <a href="#">
+                                <div class="media-body">
+                                    <label>{{post.author.user.first_name}} {{post.author.user.last_name}}</label>
+                                    <span>{{post.created_at}}</span>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="article-content">
+                            <p>{{post.body}}</p>
+                        </div>
+                        {% comment %} <div class="nav tag-cloud">
+                            <a href="#">Design</a>
+                            <a href="#">Development</a>
+                            <a href="#">Travel</a>
+                            <a href="#">Web Design</a>
+                            <a href="#">Marketing</a>
+                            <a href="#">Research</a>
+                            <a href="#">Managment</a>
+                        </div> {% endcomment %}
+                    </article>
+                    <div class="contact-form article-comment">
+                        <h4>Comments</h4>
+                        <form id="contact-form" method="POST">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea name="message" id="message" placeholder="Your message *" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="send">
+                                        <button class="px-btn theme"><span>Submit</span> <i class="arrow"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 m-15px-tb blog-aside">
+                    <!-- Author -->
+                    <div class="widget widget-author">
+                        <div class="widget-title">
+                            <h3>Author</h3>
+                        </div>
+                        <div class="widget-body">
+                            <a href="#">
+                            <div class="media align-items-center">
+                                <div class="avatar">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" title="" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <h6>Hello, I'm<br> {{post.author.user.first_name}} {{post.author.user.last_name}}</h6>
+                                </div>
+                            </div>
+                            </a>
+                            <p>I design and develop services for customers of all sizes, specializing in creating stylish, modern websites, web services and online stores</p>
+                        </div>
+                    </div>
+                    <!-- End Author -->
+                    <!-- Trending Post -->
+                    {% comment %} <div class="widget widget-post">
+                        <div class="widget-title">
+                            <h3>Trending Now</h3>
+                        </div>
+                        <div class="widget-body">
+
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- End Trending Post -->
+                    <!-- Latest Post -->
+                    <div class="widget widget-latest-post">
+                        <div class="widget-title">
+                            <h3>Latest Posts</h3>
+                        </div>
+                        <div class="widget-body">
+                            {% for post in latest %}
+                            <div class="latest-post-aside media">
+                                <div class="lpa-left media-body">
+                                    <div class="lpa-title">
+                                        <h5>
+                                            <a href="{% url 'details' post.slug %}">
+                                                {{post.title}}
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div class="lpa-meta">
+                                        <a class="name" href="#">
+                                            {{post.author.user.first_name}} {{post.author.user.last_name}}
+                                        </a>
+                                        <a class="date" href="{% url 'details' post.slug %}">
+                                            {{post.created_at}}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="lpa-right">
+                                    <a href="#">
+                                        <img src="{{post.image.url}}" title="" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- End Latest Post -->
+                    <!-- widget Tags -->
+                    <div class="widget widget-tags">
+                        <div class="widget-title">
+                            <h3>Categories</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="nav tag-cloud">
+                                {% for category in categorys %}
+                                <a href="{% url 'categoryPosts' category.slug %}">
+                                    {{category.title}}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End widget Tags -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
