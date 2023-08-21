@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from .models import Post, Category
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from .models import Post, Category, Comment
 
 # Create your views here.
 def home(request):
@@ -15,5 +18,23 @@ def details(request, slug):
     return render(request, 'blog/blogDetails.html', context)
 
 def categoryPosts(request, slug):
-    context = {}
+    category = Category.objects.get(slug=slug)
+    category_posts = Post.objects.filter(category=category)
+    context = {"category_posts":category_posts, "category":category}
     return render(request, 'blog/categoryPosts.html', context)
+
+def create_comment(request, slug):
+    post = Post.objects.get(slug=slug)
+    profile = request.user.profile
+    if request.method == 'POST':
+        data = request.POST
+        comment = data["comment"]
+        posted_comment = Comment.objects.create(
+            author = profile,
+            post=post,
+            comment = comment,
+        )
+        # print(f"The posted data is {comment}")
+        
+        url = reverse('details', args=[slug])
+        return HttpResponseRedirect(url)

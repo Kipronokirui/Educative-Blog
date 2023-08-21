@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import Profile
 from autoslug import AutoSlugField
+import uuid
 
 # Create your models here.
 class Category(models.Model):
@@ -9,13 +10,6 @@ class Category(models.Model):
     
     def __str__(self):
         return self.title
-# class Category(models.Model):
-# 	title = models.CharField(max_length=100)
-# 	image = models.ImageField(upload_to='categorys', null=False, blank=False)
-# 	slug = AutoSlugField(populate_from='title', unique=True)
-
-# 	def __str__(self):
-# 		return self.title 
 
 class Post(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -29,3 +23,15 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE, null=False, default=1)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
+    comment_id = models.UUIDField(default=uuid.uuid4, unique=True)
+    
+    def __str__(self):
+        return self.comment
+

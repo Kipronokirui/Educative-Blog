@@ -16,15 +16,16 @@
                             <div class="media">
                                 <a href="#">
                                 <div class="avatar">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" title="" alt="">
+                                    <img src="{{post.author.avatar.url}}" title="" alt="{{post.author.user.first_name}} {{post.author.user.last_name}}">
                                 </div>
                                 </a>
-                                <a href="#">
+                                
                                 <div class="media-body">
+                                    <a href="#">
                                     <label>{{post.author.user.first_name}} {{post.author.user.last_name}}</label>
+                                    </a>
                                     <span>{{post.created_at}}</span>
                                 </div>
-                                </a>
                             </div>
                         </div>
                         <div class="article-content">
@@ -41,19 +42,23 @@
                         </div> {% endcomment %}
                     </article>
                     <div class="contact-form article-comment">
-                        <h4>Comments</h4>
+                        {% if post.comments.all|length > 0 %}
+                            <h4>Comments</h4>
+                        {% else %}
+                             <h4>No comments yet.</h4>
+                        {% endif %}
                         {% include 'blog/blogComments.html' %}
-                        <form id="contact-form" method="POST">
+                        <form id="contact-form" method="POST" action="{% url 'create_comment' post.slug %}">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea name="message" id="message" placeholder="Your message *" rows="4" class="form-control"></textarea>
+                                        <textarea name="comment" id="message" placeholder="Your comment *" rows="4" class="form-control"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="send">
-                                        <button class="px-btn theme"><span>Submit</span> <i class="arrow"></i></button>
+                                        <button type="submit" class="px-btn theme"><span>Submit</span> <i class="arrow"></i></button>
                                     </div>
                                 </div>
                             </div>
