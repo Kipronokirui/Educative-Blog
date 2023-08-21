@@ -23,6 +23,7 @@ def categoryPosts(request, slug):
     context = {"category_posts":category_posts, "category":category}
     return render(request, 'blog/categoryPosts.html', context)
 
+@login_required(login_url='/auth/login')
 def create_comment(request, slug):
     post = Post.objects.get(slug=slug)
     profile = request.user.profile
